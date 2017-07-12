@@ -1,0 +1,27 @@
+{% extends "simc/base.html" %}
+{% block content %}
+<form>
+    {% for class in talents %}
+        {% for spec in class %}
+            <table class="table">
+                <tbody>
+                {% for row in spec %}
+                    <tr>
+                    {% for talent in row %}
+                        <td class="col-md-4">
+                            <input type="checkbox" id="checkbox-{{ talent.name }}">
+                            <label for="checkbox-{{ talent.name }}"><a href="//www.wowhead.com/spell={{ talent.id }}"></a></label>
+                        </td>
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+    {% endfor %}
+</form>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="//wow.zamimg.com/widgets/power.js"></script><script>var wowhead_tooltips = { "colorlinks": true, "iconizelinks": true, "renamelinks": true }</script>
+{% endblock %}
