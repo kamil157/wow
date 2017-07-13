@@ -9,8 +9,11 @@
                     <tr>
                     {% for talent in row %}
                         <td class="col-md-4">
-                            <input type="checkbox" id="checkbox-{{ talent.name }}">
-                            <label for="checkbox-{{ talent.name }}"><a href="//www.wowhead.com/spell={{ talent.id }}"></a></label>
+                            <input type="checkbox" id="checkbox-{{ talent.id }}">
+                            <label for="checkbox-{{ talent.id }}">
+                                <img src="http://wow.zamimg.com/images/wow/icons/large/{{ talent.icon }}.jpg">
+                                <span data-tooltip-href="http://www.wowdb.com/spells/{{ talent.id }}">{{ talent.name }}</span>
+                            </label>
                         </td>
                     {% endfor %}
                     </tr>
@@ -23,5 +26,5 @@
 {% endblock %}
 
 {% block js %}
-<script type="text/javascript" src="//wow.zamimg.com/widgets/power.js"></script><script>var wowhead_tooltips = { "colorlinks": true, "iconizelinks": true, "renamelinks": true }</script>
+<script type="text/javascript" src="//static-azeroth.cursecdn.com/current/js/syndication/tt.js"></script>
 {% endblock %}
