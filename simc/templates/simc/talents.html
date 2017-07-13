@@ -1,5 +1,21 @@
 {% extends "simc/base.html" %}
 {% block content %}
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_table }}
+    <input type="submit" value="Submit" />
+</form>
+
+{% if choice %}
+<hr>
+<span>{{ choice }}</span>
+{% endif %}
+{% if output %}
+<hr>
+<pre>{{ output }}</pre>
+{% endif %}
+
 <form>
     <table class="table">
         <tbody>

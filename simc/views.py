@@ -1,36 +1,43 @@
+from itertools import product
+
 import requests
+from django.shortcuts import render
 from django.views.generic import TemplateView
 
+from simc.forms import TalentsForm
 
-class TalentsView(TemplateView):
-    template_name = 'simc/talents.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(TalentsView, self).get_context_data(**kwargs)
+def get_combinations(choice):
+    result = ''
+    sorted_choice = sorted(choice.items())
+    # In simcraft, 0 means no talent selected
+    values = [c[1] if c[1] else ['0'] for c in sorted_choice]
+    talents = product(*values)
+    talent_str = [''.join(talent_choice) for talent_choice in talents]
 
-        json = requests.get(
-            "https://eu.api.battle.net/wow/data/talents?locale=en_US&apikey=4uhe36pa65u5nvacajwpkz4s9jzjzd8q").json()
+    name = 'Irith'
+    output = ('copy="{name}{combination}"\n'
+              'talents={combination}\n')
 
-        wow_class = json[kwargs['class']]
-        # TODO make a class for this json
-        spec = wow_class['specs'][int(kwargs['spec'])]['name']
-        talents = [
-            [self.get_talent_for_spec(spec, talent) for talent in row]
-            for row in wow_class['talents']
-        ]
+    for combination in talent_str:
+        result += output.format(name=name, combination=combination)
+        result += '\n'
 
-        context['talents'] = talents
+    return result
 
-        return context
 
-    @staticmethod
-    def get_talent_for_spec(spec, talent):
-        try:
-            spec_talent = next(t for t in talent if 'spec' in t and t['spec']['name'] == spec)
-        except StopIteration:
-            # If there is no spec info, this talent is for all specs which don't have a talent specified.
-            spec_talent = next(t for t in talent if 'spec' not in t)
-        return spec_talent['spell']
+def get_talents(request, **kwargs):
+    if request.method == 'POST':
+        form = TalentsForm(request.POST, **kwargs)
+        if form.is_valid():
+            choice = form.cleaned_data
+            output = get_combinations(choice)
+            return render(request, 'simc/talents.html', {'form': form, 'choice': choice, 'output': output})
+
+    else:
+        form = TalentsForm(**kwargs)
+
+    return render(request, 'simc/talents.html', {'form': form})
 
 
 class CharacterView(TemplateView):
