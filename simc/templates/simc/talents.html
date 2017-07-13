@@ -1,27 +1,23 @@
 {% extends "simc/base.html" %}
 {% block content %}
 <form>
-    {% for class in talents %}
-        {% for spec in class %}
-            <table class="table">
-                <tbody>
-                {% for row in spec %}
-                    <tr>
+    <table class="table">
+        <tbody>
+            {% for row in talents %}
+                <tr>
                     {% for talent in row %}
                         <td class="col-md-4">
-                            <input type="checkbox" id="checkbox-{{ talent.id }}">
+                            <input type="checkbox" id="checkbox-{{ talent.id }}" name="checkbox_group[]">
                             <label for="checkbox-{{ talent.id }}">
                                 <img src="http://wow.zamimg.com/images/wow/icons/large/{{ talent.icon }}.jpg">
                                 <span data-tooltip-href="http://www.wowdb.com/spells/{{ talent.id }}">{{ talent.name }}</span>
                             </label>
                         </td>
                     {% endfor %}
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        {% endfor %}
-    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </form>
 {% endblock %}
 
