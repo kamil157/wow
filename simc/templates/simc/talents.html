@@ -16,15 +16,21 @@
 <div>
     {% if output %}
     <hr>
-    <textarea onclick="this.focus();this.select()" style="width: 100%;">{{ output }}</textarea>
-    <pre onclick="this.focus();this.select()">{{ output }}</pre>
+    <textarea rows="6" readonly id="output" style="width: 100%;">{{ output }}</textarea>
+    <!--<button class="btn btn-primary clipboard">Copy to clipboard</button>-->
+    <button class="btn" data-clipboard-target="#output">
+        <img src="assets/clippy.svg" alt="Copy to clipboard">
+    </button>
     {% endif %}
 </div>
 {% endblock %}
 
 {% block js %}
 <script type="text/javascript" src="//static-azeroth.cursecdn.com/current/js/syndication/tt.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
 <script>
+new Clipboard('.btn');
+
 $('input').change(function() {
     if (this.checked)
     {
