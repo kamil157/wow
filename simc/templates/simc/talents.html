@@ -3,38 +3,23 @@
 
 <form action="" method="post">
     {% csrf_token %}
-    {{ form.as_table }}
-    <input type="submit" value="Submit" />
-</form>
-
-{% if choice %}
-<hr>
-<span>{{ choice }}</span>
-{% endif %}
-{% if output %}
-<hr>
-<pre>{{ output }}</pre>
-{% endif %}
-
-<form>
     <table class="table">
         <tbody>
-            {% for row in talents %}
-                <tr>
-                    {% for talent in row %}
-                        <td class="col-md-4">
-                            <input type="checkbox" id="checkbox-{{ talent.id }}" name="checkbox_group[]">
-                            <label for="checkbox-{{ talent.id }}">
-                                <img src="http://wow.zamimg.com/images/wow/icons/large/{{ talent.icon }}.jpg">
-                                <span data-tooltip-href="http://www.wowdb.com/spells/{{ talent.id }}">{{ talent.name }}</span>
-                            </label>
-                        </td>
-                    {% endfor %}
-                </tr>
+            {% for field in form %}
+                {{ field }}
             {% endfor %}
         </tbody>
     </table>
+    <input class="btn btn-primary" type="submit" value="Submit">
 </form>
+
+<div>
+    {% if output %}
+    <hr>
+    <textarea onclick="this.focus();this.select()" style="width: 100%;">{{ output }}</textarea>
+    <pre onclick="this.focus();this.select()">{{ output }}</pre>
+    {% endif %}
+</div>
 {% endblock %}
 
 {% block js %}

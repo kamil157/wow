@@ -19,14 +19,11 @@ def get_combinations(choice):
     output = ('copy="{name}{combination}"\n'
               'talents={combination}\n')
 
-    for combination in talent_str:
-        result += output.format(name=name, combination=combination)
-        result += '\n'
-
-    return result
+    return '\n'.join(output.format(name=name, combination=combination) for combination in talent_str)
 
 
 def get_talents(request, **kwargs):
+    # TODO view with talents for all specs
     if request.method == 'POST':
         form = TalentsForm(request.POST, **kwargs)
         if form.is_valid():

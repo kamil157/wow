@@ -1,12 +1,14 @@
 import requests
 from django import forms
 
+from simc.widgets import TalentSelectMultiple
+
 
 class TalentsForm(forms.Form):
     def __init__(self, *args, **kwargs):
-        kw_class = kwargs.pop('class')
+        kw_class = kwargs.pop('class_id')
         kw_spec = kwargs.pop('spec')
-        super(TalentsForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         # TODO make a class for this json
         json = requests.get(
@@ -19,8 +21,9 @@ class TalentsForm(forms.Form):
             # Talents in simcraft are numbered from 1
             choices = [(col_id + 1, self.get_talent_for_spec(spec_name, row[col_id])['name'])
                        for col_id in range(3)]
+            talents = [self.get_talent_for_spec(spec_name, row[col_id]) for col_id in range(3)]
             choice = forms.MultipleChoiceField(choices=choices, label='', required=False,
-                                               widget=forms.CheckboxSelectMultiple())
+                                               widget=TalentSelectMultiple(talents=talents))
             self.fields['row_{index}'.format(index=row_id)] = choice
 
     @staticmethod

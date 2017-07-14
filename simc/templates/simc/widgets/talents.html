@@ -1,0 +1,16 @@
+{% load simc_extras %}
+{% with id=widget.attrs.id %}
+<tr>
+    {% for group, options, index, talent in widget.optgroups %}
+        {% for option in options %}
+            <td class="col-md-4">
+                <label for="{{ id }}_{{ index }}" style="width:100%">
+                    {% include "django/forms/widgets/checkbox.html" with widget=option %}
+                    <img src="http://wow.zamimg.com/images/wow/icons/large/{{ talent.icon|icon }}.jpg">
+                    <span data-tooltip-href="http://www.wowdb.com/spells/{{ talent.id }}">{{ talent.name }}</span>
+                </label>
+            </td>
+        {% endfor %}
+    {% endfor %}
+</tr>
+{% endwith %}
