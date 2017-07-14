@@ -6,6 +6,7 @@ from simc.widgets import TalentSelectMultiple
 
 class TalentsForm(forms.Form):
     def __init__(self, *args, **kwargs):
+        # TODO allow selecting class / spec in a view
         kw_class = kwargs.pop('class_id')
         kw_spec = kwargs.pop('spec')
         super().__init__(*args, **kwargs)

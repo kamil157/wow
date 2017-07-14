@@ -24,7 +24,8 @@
     <div class="form-group">
         <textarea class="form-control" rows="6" readonly id="output" style="width: 100%; resize:none;">{{ output }}</textarea>
     </div>
-    <button class="btn btn-default" data-clipboard-target="#output">Copy to clipboard</button>
+    {% comment %}TODO improve user feedback for copying{% endcomment %}
+    <button id="btn-clipboard" class="btn btn-default" data-clipboard-target="#output">Copy to clipboard</button>
     {% endif %}
 </div>
 {% endblock %}
@@ -33,7 +34,7 @@
 <script type="text/javascript" src="//static-azeroth.cursecdn.com/current/js/syndication/tt.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
 <script>
-new Clipboard('.btn');
+new Clipboard('#btn-clipboard');
 
 $('input').change(function() {
     if (this.checked)
