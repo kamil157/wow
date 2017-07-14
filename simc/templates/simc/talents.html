@@ -1,6 +1,8 @@
 {% extends "simc/base.html" %}
 {% block content %}
-
+<h4>
+    Choose talents to compare
+</h4>
 <form action="" method="post">
     {% csrf_token %}
     <table class="table">
@@ -16,8 +18,13 @@
 <div>
     {% if output %}
     <hr>
-    <textarea rows="6" readonly id="output" style="width: 100%; resize:none;">{{ output }}</textarea>
-    <button class="btn" data-clipboard-target="#output">Copy to clipboard</button>
+    <h4>
+        SimCraft Input
+    </h4>
+    <div class="form-group">
+        <textarea class="form-control" rows="6" readonly id="output" style="width: 100%; resize:none;">{{ output }}</textarea>
+    </div>
+    <button class="btn btn-default" data-clipboard-target="#output">Copy to clipboard</button>
     {% endif %}
 </div>
 {% endblock %}
