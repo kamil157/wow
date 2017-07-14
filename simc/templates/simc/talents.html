@@ -24,4 +24,16 @@
 
 {% block js %}
 <script type="text/javascript" src="//static-azeroth.cursecdn.com/current/js/syndication/tt.js"></script>
+<script>
+$('input').change(function() {
+    if (this.checked)
+    {
+        $(this.parentElement).addClass('checked');
+    }
+    else
+    {
+        $(this.parentElement).removeClass('checked');
+    }
+});
+</script>
 {% endblock %}

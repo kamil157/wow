@@ -23,7 +23,7 @@ class TalentsForm(forms.Form):
                        for col_id in range(3)]
             talents = [self.get_talent_for_spec(spec_name, row[col_id]) for col_id in range(3)]
             choice = forms.MultipleChoiceField(choices=choices, label='', required=False,
-                                               widget=TalentSelectMultiple(talents=talents))
+                                               widget=TalentSelectMultiple(talents=talents, attrs={'class': 'hidden'}))
             self.fields['row_{index}'.format(index=row_id)] = choice
 
     @staticmethod

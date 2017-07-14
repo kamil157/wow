@@ -8,18 +8,16 @@ from simc.forms import TalentsForm
 
 
 def get_combinations(choice):
-    result = ''
     sorted_choice = sorted(choice.items())
     # In simcraft, 0 means no talent selected
     values = [c[1] if c[1] else ['0'] for c in sorted_choice]
     talents = product(*values)
     talent_str = [''.join(talent_choice) for talent_choice in talents]
 
-    name = 'Irith'
-    output = ('copy="{name}{combination}"\n'
+    output = ('copy="{combination}"\n'
               'talents={combination}\n')
 
-    return '\n'.join(output.format(name=name, combination=combination) for combination in talent_str)
+    return '\n'.join(output.format(combination=combination) for combination in talent_str)
 
 
 def get_talents(request, **kwargs):

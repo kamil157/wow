@@ -2,9 +2,9 @@ from django.forms import CheckboxSelectMultiple
 
 
 class TalentSelectMultiple(CheckboxSelectMultiple):
-    def __init__(self, talents):
+    def __init__(self, talents, *args, **kwargs):
         self.talents = talents
-        super().__init__()
+        super().__init__(*args, **kwargs)
 
     template_name = 'simc/widgets/talents.html'
 
