@@ -104,4 +104,4 @@ ENV/
 # SQlite
 db.sqlite3
 
-static/
+_static/

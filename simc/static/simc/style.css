@@ -1,0 +1,7 @@
+body {
+  padding-top: 60px;
+}
+
+label.checked {
+    background-color: #5cb85c;
+}
