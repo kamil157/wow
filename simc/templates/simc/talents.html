@@ -16,11 +16,8 @@
 <div>
     {% if output %}
     <hr>
-    <textarea rows="6" readonly id="output" style="width: 100%;">{{ output }}</textarea>
-    <!--<button class="btn btn-primary clipboard">Copy to clipboard</button>-->
-    <button class="btn" data-clipboard-target="#output">
-        <img src="assets/clippy.svg" alt="Copy to clipboard">
-    </button>
+    <textarea rows="6" readonly id="output" style="width: 100%; resize:none;">{{ output }}</textarea>
+    <button class="btn" data-clipboard-target="#output">Copy to clipboard</button>
     {% endif %}
 </div>
 {% endblock %}
