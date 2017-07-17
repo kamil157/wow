@@ -1,5 +1,5 @@
-import requests
 from django import forms
+from django.utils.text import slugify
 
 from simc import wowapi
 from simc.widgets import TalentSelectMultiple
@@ -7,13 +7,13 @@ from simc.widgets import TalentSelectMultiple
 
 class TalentsForm(forms.Form):
     def __init__(self, *args, **kwargs):
-        kw_class = kwargs.pop('class_id')
+        kw_class = kwargs.pop('class_slug')
         kw_spec = kwargs.pop('spec')
         super().__init__(*args, **kwargs)
 
         talents_info = wowapi.get_talents()
-        wow_class = talents_info[kw_class]
-        spec_name = wow_class['specs'][int(kw_spec)]['name']
+        wow_class = next(c for c in talents_info.values() if c['class'] == kw_class)
+        spec_name = next(s for s in wow_class['specs'] if slugify(s['name']) == kw_spec)['name']
 
         for row_id, row in enumerate(wow_class['talents']):
             # Talents in simcraft are numbered from 1

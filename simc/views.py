@@ -22,7 +22,6 @@ def get_combinations(choice):
 
 
 def get_talents(request, **kwargs):
-    # TODO view with talents for all specs
     if request.method == 'POST':
         form = TalentsForm(request.POST, **kwargs)
         if form.is_valid():

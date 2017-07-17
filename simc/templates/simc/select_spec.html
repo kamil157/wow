@@ -12,7 +12,7 @@
         </h4>
         {% for spec in class.specs %}
             <div style="margin-bottom:5px;">
-                <a href="{% url 'simc:talents' class.class_info.id spec.order %}">{{ spec.name }}</a>
+                <a href="{% url 'simc:talents' class.slug spec.name|slugify %}">{{ spec.name }}</a>
             </div>
         {% endfor %}
         <br>
