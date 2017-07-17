@@ -1,0 +1,22 @@
+{% extends "simc/base.html" %}
+{% block content %}
+<h4>
+    Choose your specialization
+</h4>
+
+{% for class in classes %}
+    <div class="col-md-4">
+        <h4>{{ class.class.name }}</h4>
+        {% for spec in class.specs %}
+            <div>
+                <a href="{% url 'simc:talents' class.class.id spec.order %}">
+                    <img src="http://wow.zamimg.com/images/wow/icons/tiny/{{ spec.icon }}.gif">
+                    {{ spec.name }}
+                </a>
+            </div>
+        {% endfor %}
+        <br>
+    </div>
+{% endfor %}
+
+{% endblock %}
