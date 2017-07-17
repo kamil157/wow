@@ -45,7 +45,8 @@ def get_select_spec(request, **kwargs):
     classes = []
     for cls in class_json['classes']:
         wow_class = spec_json[str(cls['id'])]
-        classes.append({'class': cls, 'slug': wow_class['class'], 'specs': wow_class['specs']})
+        icon = 'classicon_{}'.format(wow_class['class'].replace('-', ''))
+        classes.append({'class': cls, 'slug': wow_class['class'], 'specs': wow_class['specs'], 'icon': icon})
 
     return render(request, 'simc/select_spec.html', {'classes': sorted(classes, key=lambda c: c['slug'])})
 
