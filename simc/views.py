@@ -4,6 +4,7 @@ import requests
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
+from simc import wowapi
 from simc.forms import TalentsForm
 
 
@@ -35,18 +36,15 @@ def get_talents(request, **kwargs):
     return render(request, 'simc/talents.html', {'form': form})
 
 
-def get_select_spec(request, **kwargs):
-    class_json = requests.get(
-        'https://eu.api.battle.net/wow/data/character/classes?locale=en_US&apikey=4uhe36pa65u5nvacajwpkz4s9jzjzd8q').json()
-
-    spec_json = requests.get(
-        'https://eu.api.battle.net/wow/data/talents?locale=en_US&apikey=4uhe36pa65u5nvacajwpkz4s9jzjzd8q').json()
+def get_select_spec(request):
+    all_class_info = wowapi.get_classes()
+    spec_json = wowapi.get_talents()
 
     classes = []
-    for cls in class_json['classes']:
-        wow_class = spec_json[str(cls['id'])]
+    for class_info in all_class_info['classes']:
+        wow_class = spec_json[str(class_info['id'])]
         icon = 'classicon_{}'.format(wow_class['class'].replace('-', ''))
-        classes.append({'class': cls, 'slug': wow_class['class'], 'specs': wow_class['specs'], 'icon': icon})
+        classes.append({'class_info': class_info, 'specs': wow_class['specs'], 'slug': wow_class['class'], 'icon': icon})
 
     return render(request, 'simc/select_spec.html', {'classes': sorted(classes, key=lambda c: c['slug'])})
 

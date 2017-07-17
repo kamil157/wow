@@ -1,21 +1,18 @@
 import requests
 from django import forms
 
+from simc import wowapi
 from simc.widgets import TalentSelectMultiple
 
 
 class TalentsForm(forms.Form):
     def __init__(self, *args, **kwargs):
-        # TODO allow selecting class / spec in a view
         kw_class = kwargs.pop('class_id')
         kw_spec = kwargs.pop('spec')
         super().__init__(*args, **kwargs)
 
-        # TODO make a class for this json
-        json = requests.get(
-            "https://eu.api.battle.net/wow/data/talents?locale=en_US&apikey=4uhe36pa65u5nvacajwpkz4s9jzjzd8q").json()
-
-        wow_class = json[kw_class]
+        talents_info = wowapi.get_talents()
+        wow_class = talents_info[kw_class]
         spec_name = wow_class['specs'][int(kw_spec)]['name']
 
         for row_id, row in enumerate(wow_class['talents']):
