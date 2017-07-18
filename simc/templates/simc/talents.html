@@ -19,7 +19,7 @@
     {% if output %}
     <hr>
     <h4>
-        SimCraft input
+        SimCraft input ({{ num_configs }} configuration{{ num_configs|pluralize }})
     </h4>
     <div class="form-group">
         <textarea class="form-control" rows="6" readonly id="output" style="width: 100%; resize:none;">{{ output }}</textarea>

@@ -13,10 +13,10 @@ def get_combinations(choice):
     talents = product(*values)
     talent_str = [''.join(talent_choice) for talent_choice in talents]
 
-    output = ('copy="{combination}"\n'
+    output = ('copy="{combination}"\n' # TODO show talent name instead of number?
               'talents={combination}\n')
 
-    return '\n'.join(output.format(combination=combination) for combination in talent_str)
+    return '\n'.join(output.format(combination=combination) for combination in talent_str), len(talent_str)
 
 
 def get_talents(request, **kwargs):
@@ -24,8 +24,8 @@ def get_talents(request, **kwargs):
         form = TalentsForm(request.POST, **kwargs)
         if form.is_valid():
             choice = form.cleaned_data
-            output = get_combinations(choice)
-            return render(request, 'simc/talents.html', {'form': form, 'choice': choice, 'output': output})
+            output, num_configs = get_combinations(choice)
+            return render(request, 'simc/talents.html', {'form': form, 'choice': choice, 'output': output, 'num_configs': num_configs})
 
     else:
         form = TalentsForm(**kwargs)
