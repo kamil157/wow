@@ -1,14 +1,23 @@
-import requests_cache
+from datetime import timedelta
+
+from requests_cache import CachedSession
+
+from wow import settings
+
+
+def get(resource):
+    root = 'https://eu.api.battle.net/wow/data/'
+    if settings.WOW_API_SECRET_KEY is None:
+        raise Exception('WOW_API_SECRET_KEY is not set.')
+    params = {'apikey': settings.WOW_API_SECRET_KEY, 'locale': 'en_US'}
+
+    s = CachedSession(expire_after=timedelta(hours=1))
+    return s.get(root + resource, params=params).json()
 
 
 def get_classes():
-    s = requests_cache.CachedSession()
-    return s.get(
-        'https://eu.api.battle.net/wow/data/character/classes?locale=en_US&apikey=4uhe36pa65u5nvacajwpkz4s9jzjzd8q').json()
+    return get('character/classes')
 
 
 def get_talents():
-    # TODO make a class for this json
-    s = requests_cache.CachedSession()
-    return s.get(
-        'https://eu.api.battle.net/wow/data/talents?locale=en_US&apikey=4uhe36pa65u5nvacajwpkz4s9jzjzd8q').json()
+    return get('talents')

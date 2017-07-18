@@ -6,6 +6,5 @@ app_name = 'simc'
 
 urlpatterns = [
     url(r'^talents/(?P<class_slug>[-a-z]+)/(?P<spec>[-a-z]+)$', views.get_talents, name='talents'),
-    url(r'^character/$', views.CharacterView.as_view(), name='character'),
     url(r'^talents/$', views.get_select_spec, name='select-spec'),
 ]

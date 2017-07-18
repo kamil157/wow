@@ -1,8 +1,6 @@
 from itertools import product
 
-import requests
 from django.shortcuts import render
-from django.views.generic import TemplateView
 
 from simc import wowapi
 from simc.forms import TalentsForm
@@ -46,15 +44,3 @@ def get_select_spec(request):
         classes.append({'class_info': class_info, 'specs': wow_class['specs'], 'slug': wow_class['class'], 'icon': icon})
 
     return render(request, 'simc/select_spec.html', {'classes': sorted(classes, key=lambda c: c['slug'])})
-
-
-class CharacterView(TemplateView):
-    template_name = 'simc/character.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(CharacterView, self).get_context_data(**kwargs)
-        json = requests.get(
-            "https://eu.api.battle.net/wow/character/Aggramar/Atuad?fields=talents&locale=en_US&apikey=4uhe36pa65u5nvacajwpkz4s9jzjzd8q").json()
-
-        context['character'] = json
-        return context

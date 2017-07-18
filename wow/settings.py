@@ -21,6 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '71$gnb8&048&6)g8c!s=l9^!mijad8&kjcb&b2rurz@=fuyn5('
+WOW_API_SECRET_KEY = os.environ.get('WOW_API_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
