@@ -46,6 +46,10 @@ def get_configuration_name(configuration, spec_name, talent_info):
 def get_talents(request, **kwargs):
     kw_class = kwargs.pop('class_slug')
     kw_spec = kwargs.pop('spec')
+
+    class_info = wowapi.get_classes()['classes']
+    class_name = next(c['name'] for c in class_info if slugify(c['name']) == kw_class)
+
     talents_info = wowapi.get_talents()
     wow_class = next(c for c in talents_info.values() if c['class'] == kw_class)
     spec_name = next(s for s in wow_class['specs'] if slugify(s['name']) == kw_spec)['name']
@@ -60,7 +64,7 @@ def get_talents(request, **kwargs):
     else:
         form = TalentsForm(wow_class['talents'], spec_name)
 
-    return render(request, 'simc/talents.html', {'form': form})
+    return render(request, 'simc/talents.html', {'form': form, 'class': class_name, 'spec': spec_name})
 
 
 def get_select_spec(request):
