@@ -20,4 +20,5 @@ def get_classes():
 
 
 def get_talents():
+    # TODO would be nice if this structure was defined in code and easier to navigate
     return get('talents')

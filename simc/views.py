@@ -1,34 +1,64 @@
 from itertools import product
 
 from django.shortcuts import render
+from django.utils.text import slugify
 
 from simc import wowapi
 from simc.forms import TalentsForm
+from simc.talents import get_talent_for_spec
 
 
-def get_combinations(choice):
+def get_configurations(choice, talent_info, spec_name):
+    # TODO annotate types
     sorted_choice = sorted(choice.items())
     # In simcraft, 0 means no talent selected
     values = [c[1] if c[1] else ['0'] for c in sorted_choice]
     talents = product(*values)
     talent_str = [''.join(talent_choice) for talent_choice in talents]
 
-    output = ('copy="{combination}"\n' # TODO show talent name instead of number?
-              'talents={combination}\n')
+    output = ('copy="{name}"\n'
+              'talents={configuration}\n')
 
-    return '\n'.join(output.format(combination=combination) for combination in talent_str), len(talent_str)
+    output_str_list = []
+    for configuration in talent_str:
+        name = get_configuration_name(configuration, spec_name, talent_info)
+        output_str_list.append(output.format(name=name, configuration=configuration))
+
+    return '\n'.join(output_str_list), len(talent_str)
+
+
+def get_configuration_name(configuration, spec_name, talent_info):
+    talent_names = []
+    for row, column_choice in enumerate(configuration):
+        # In simcraft, 0 means no talent selected
+        if column_choice != '0':
+            talent = talent_info[row][int(column_choice) - 1]
+            talent_name = get_talent_for_spec(spec_name, talent)['name']
+
+            words = talent_name.split()
+            if len(words) == 1:
+                talent_names.append(talent_name[:3])
+            else:
+                talent_names.append(''.join(w[0] for w in words))
+    return ' '.join(talent_names)
 
 
 def get_talents(request, **kwargs):
+    kw_class = kwargs.pop('class_slug')
+    kw_spec = kwargs.pop('spec')
+    talents_info = wowapi.get_talents()
+    wow_class = next(c for c in talents_info.values() if c['class'] == kw_class)
+    spec_name = next(s for s in wow_class['specs'] if slugify(s['name']) == kw_spec)['name']
+
     if request.method == 'POST':
-        form = TalentsForm(request.POST, **kwargs)
+        form = TalentsForm(wow_class['talents'], spec_name, request.POST)
         if form.is_valid():
-            choice = form.cleaned_data
-            output, num_configs = get_combinations(choice)
-            return render(request, 'simc/talents.html', {'form': form, 'choice': choice, 'output': output, 'num_configs': num_configs})
+            output, num_configs = get_configurations(form.cleaned_data, wow_class['talents'], spec_name)
+            return render(request, 'simc/talents.html',
+                          {'form': form, 'output': output, 'num_configs': num_configs})
 
     else:
-        form = TalentsForm(**kwargs)
+        form = TalentsForm(wow_class['talents'], spec_name)
 
     return render(request, 'simc/talents.html', {'form': form})
 
@@ -41,6 +71,7 @@ def get_select_spec(request):
     for class_info in all_class_info['classes']:
         wow_class = spec_json[str(class_info['id'])]
         icon = 'classicon_{}'.format(wow_class['class'].replace('-', ''))
-        classes.append({'class_info': class_info, 'specs': wow_class['specs'], 'slug': wow_class['class'], 'icon': icon})
+        classes.append(
+            {'class_info': class_info, 'specs': wow_class['specs'], 'slug': wow_class['class'], 'icon': icon})
 
     return render(request, 'simc/select_spec.html', {'classes': sorted(classes, key=lambda c: c['slug'])})
