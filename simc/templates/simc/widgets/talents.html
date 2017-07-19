@@ -6,9 +6,9 @@
             <td class="col-md-4" style="border:none">
                 <label for="{{ option.attrs.id }}" style="width:100%; margin:0; font-weight:normal;"
                        {% if option.attrs.checked %}class="checked"{% endif %}
-                       data-tooltip-href="http://www.wowdb.com/spells/{{ talent.id }}">
+                       data-tooltip-href="//www.wowdb.com/spells/{{ talent.id }}">
                     {% include "django/forms/widgets/checkbox.html" with widget=option %}
-                    <img src="http://wow.zamimg.com/images/wow/icons/large/{{ talent.icon|icon }}.jpg">
+                    <img src="//wow.zamimg.com/images/wow/icons/large/{{ talent.icon|icon }}.jpg">
                     <span>{{ talent.name }}</span>
                 </label>
             </td>
