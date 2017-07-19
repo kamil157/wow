@@ -16,9 +16,11 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from wow import views
 from wow import settings
 
 urlpatterns = [
+    url(r'^$', views.home, name='home'),
     url(r'^simc/', include('simc.urls')),
     url(r'^admin/', admin.site.urls),
 ]
