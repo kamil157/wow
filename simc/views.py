@@ -1,3 +1,4 @@
+import os
 from itertools import product
 
 from django.shortcuts import render
@@ -6,6 +7,7 @@ from django.utils.text import slugify
 from simc import wowapi
 from simc.forms import TalentsForm
 from simc.talents import get_talent_for_spec
+from wow import settings
 
 
 def get_configurations(choice, talent_info, spec_name):
@@ -34,13 +36,24 @@ def get_configuration_name(configuration, spec_name, talent_info):
         if column_choice != '0':
             talent = talent_info[row][int(column_choice) - 1]
             talent_name = get_talent_for_spec(spec_name, talent)['name']
-
-            words = talent_name.split()
-            if len(words) == 1:
-                talent_names.append(talent_name[:3])
-            else:
-                talent_names.append(''.join(w[0] for w in words))
+            talent_names.append(get_short_talent_name(talent_name))
     return ' '.join(talent_names)
+
+
+def get_short_talent_name(talent_name):
+    with open(os.path.join(settings.BASE_DIR, 'simc/dictionary.txt')) as f:
+        dictionary = set(word.strip() for word in f.readlines())
+
+    words = talent_name.split()
+    if len(words) == 1:
+        # Check if the word can be made from two words
+        for i in range(1, len(talent_name)):
+            left, right = talent_name[:i], talent_name[i:]
+            if left.lower() in dictionary and right.lower() in dictionary:
+                return left[0].upper() + right[0].upper()
+        return talent_name[:3]
+    else:
+        return ''.join(w[0] for w in words)
 
 
 def get_talents(request, **kwargs):
