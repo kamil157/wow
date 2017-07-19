@@ -20,11 +20,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '71$gnb8&048&6)g8c!s=l9^!mijad8&kjcb&b2rurz@=fuyn5('
-WOW_API_SECRET_KEY = os.environ.get('WOW_API_SECRET_KEY')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '71$gnb8&048&6)g8c!s=l9^!mijad8&kjcb&b2rurz@=fuyn5(')
+WOW_API_SECRET_KEY = os.environ.get('WOW_API_SECRET_KEY', '4uhe36pa65u5nvacajwpkz4s9jzjzd8q')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
 ALLOWED_HOSTS = ['*']
 
@@ -124,3 +124,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = '_static'
+
+if not DEBUG:
+    X_FRAME_OPTIONS = 'DENY'
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
