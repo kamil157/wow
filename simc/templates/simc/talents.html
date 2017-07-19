@@ -1,7 +1,11 @@
 {% extends "simc/base.html" %}
 
 {% block title %}
-{{ spec }} {{ class }}
+{{ spec.name }} {{ class }}
+{% endblock %}
+
+{% block favicon %}
+//wow.zamimg.com/images/wow/icons/medium/{{ spec.icon }}.jpg
 {% endblock %}
 
 {% block content %}

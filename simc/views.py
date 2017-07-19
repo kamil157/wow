@@ -52,19 +52,19 @@ def get_talents(request, **kwargs):
 
     talents_info = wowapi.get_talents()
     wow_class = next(c for c in talents_info.values() if c['class'] == kw_class)
-    spec_name = next(s for s in wow_class['specs'] if slugify(s['name']) == kw_spec)['name']
+    spec = next(s for s in wow_class['specs'] if slugify(s['name']) == kw_spec)
 
     view_data = {}
     if request.method == 'POST':
-        form = TalentsForm(wow_class['talents'], spec_name, request.POST)
+        form = TalentsForm(wow_class['talents'], spec['name'], request.POST)
         if form.is_valid():
-            output, num_configs = get_configurations(form.cleaned_data, wow_class['talents'], spec_name)
+            output, num_configs = get_configurations(form.cleaned_data, wow_class['talents'], spec['name'])
             view_data.update({'output': output, 'num_configs': num_configs})
 
     else:
-        form = TalentsForm(wow_class['talents'], spec_name)
+        form = TalentsForm(wow_class['talents'], spec['name'])
 
-    view_data.update({'form': form, 'class': class_name, 'spec': spec_name})
+    view_data.update({'form': form, 'class': class_name, 'spec': spec})
     return render(request, 'simc/talents.html', view_data)
 
 
