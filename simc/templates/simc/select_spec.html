@@ -16,7 +16,7 @@ Choose specialization
             {{ class.class_info.name }}
         </h4>
         {% for spec in class.specs %}
-            <div style="margin-bottom:5px;">
+            <div class="mb-5">
                 <a href="{% url 'simc:talents' class.slug spec.name|slugify %}">{{ spec.name }}</a>
             </div>
         {% endfor %}
