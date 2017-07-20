@@ -1,6 +1,7 @@
 import os
 from itertools import product
 
+from django.http import Http404
 from django.shortcuts import render
 from django.utils.text import slugify
 
@@ -61,11 +62,17 @@ def get_talents(request, **kwargs):
     kw_spec = kwargs.pop('spec')
 
     class_info = wowapi.get_classes()['classes']
-    class_name = next(c['name'] for c in class_info if slugify(c['name']) == kw_class)
+    try:
+        class_name = next(c['name'] for c in class_info if slugify(c['name']) == kw_class)
+    except StopIteration:
+        raise Http404('Invalid class slug.')
 
     talents_info = wowapi.get_talents()
     wow_class = next(c for c in talents_info.values() if c['class'] == kw_class)
-    spec = next(s for s in wow_class['specs'] if slugify(s['name']) == kw_spec)
+    try:
+        spec = next(s for s in wow_class['specs'] if slugify(s['name']) == kw_spec)
+    except StopIteration:
+        raise Http404('Invalid spec slug.')
 
     view_data = {}
     if request.method == 'POST':
