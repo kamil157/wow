@@ -10,10 +10,6 @@ label.checked {
     margin-bottom: .25em;
 }
 
-textarea[readonly] {
-    resize:none;
-}
-
 .btn-talent {
     width:100%;
     margin:0;

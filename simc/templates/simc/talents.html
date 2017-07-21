@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-{{ spec.name }} {{ class }}
+{{ spec.name }} {{ class_name }}
 {% endblock %}
 
 {% block favicon %}
@@ -25,8 +25,8 @@
     <input class="btn btn-primary" type="submit" value="Submit">
 </form>
 
+{% if output %}
 <div>
-    {% if output %}
     <hr>
     <h4>
         SimCraft input ({{ num_configs }} configuration{{ num_configs|pluralize }})
@@ -38,8 +38,8 @@
             data-placement="auto top" data-trigger="manual" data-title="Copied!">
         Copy to clipboard
     </button>
-    {% endif %}
 </div>
+{% endif %}
 {% endblock %}
 
 {% block js %}

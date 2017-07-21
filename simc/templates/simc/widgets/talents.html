@@ -5,7 +5,7 @@
         {% for option in options %}
             <td class="col-md-4">
                 <label for="{{ option.attrs.id }}"
-                       class="btn-talent{% if option.attrs.checked %} checked{% endif %}"
+                       class="btn-talent{% if 'checked' in option.attrs %} checked{% endif %}"
                        data-tooltip-href="//www.wowdb.com/spells/{{ talent.id }}">
                     {% include "django/forms/widgets/checkbox.html" with widget=option %}
                     <img src="//wow.zamimg.com/images/wow/icons/large/{{ talent.icon|icon }}.jpg">
