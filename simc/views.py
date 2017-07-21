@@ -3,6 +3,8 @@ from collections import OrderedDict
 from itertools import product
 
 import logging
+
+from functools import lru_cache
 from django.http import Http404
 from django.shortcuts import render
 from django.utils.text import slugify
@@ -44,12 +46,18 @@ def get_configuration_name(configuration, spec_name, talent_info):
     return ' '.join(talent_names)
 
 
-def get_short_talent_name(talent_name):
+@lru_cache(maxsize=1)
+def get_dictionary():
     with open(os.path.join(settings.BASE_DIR, 'simc/dictionary.txt')) as f:
-        dictionary = set(word.strip() for word in f.readlines())
+        return set(word.strip() for word in f.readlines())
 
+
+@lru_cache()
+def get_short_talent_name(talent_name):
     words = talent_name.split()
     if len(words) == 1:
+        dictionary = get_dictionary()
+
         # Check if the word can be made from two words
         for i in range(1, len(talent_name)):
             left, right = talent_name[:i], talent_name[i:]
