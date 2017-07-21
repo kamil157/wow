@@ -4,6 +4,9 @@ from itertools import product
 
 from wow import settings
 
+# In simcraft, 0 means no talent selected
+NO_TALENT = '0'
+
 
 def get_talent_for_spec(spec_name, talent):
     try:
@@ -39,8 +42,7 @@ def get_short_talent_name(talent_name):
 def get_configuration_name(configuration, spec_name, talent_info):
     talent_names = []
     for row, column_choice in enumerate(configuration):
-        # In simcraft, 0 means no talent selected
-        if column_choice != '0':
+        if column_choice != NO_TALENT:
             talent = talent_info[row][int(column_choice) - 1]
             talent_name = get_talent_for_spec(spec_name, talent)['name']
             talent_names.append(get_short_talent_name(talent_name))
@@ -49,8 +51,7 @@ def get_configuration_name(configuration, spec_name, talent_info):
 
 def get_configurations(choice, talent_info, spec_name):
     # TODO annotate types
-    # In simcraft, 0 means no talent selected
-    values = [c if c else ['0'] for c in choice.values()]
+    values = [c if c else [NO_TALENT] for c in choice.values()]
     talents = product(*values)
     talent_str = [''.join(talent_choice) for talent_choice in talents]
 
