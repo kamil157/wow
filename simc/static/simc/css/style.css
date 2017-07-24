@@ -15,3 +15,7 @@ label.checked {
     margin:0;
     font-weight:normal;
 }
+
+label {
+    font-weight:normal;
+}

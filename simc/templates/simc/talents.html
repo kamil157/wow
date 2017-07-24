@@ -25,19 +25,32 @@
     <input class="btn btn-primary" type="submit" value="Submit">
 </form>
 
-{% if output %}
+{% if copy %}
 <div>
     <hr>
     <h4>
-        SimCraft input ({{ num_configs }} configuration{{ num_configs|pluralize }})
+        SimulationCraft input ({{ num_configs }} configuration{{ num_configs|pluralize }})
     </h4>
-    <div class="form-group">
-        <textarea class="form-control" rows="6" readonly id="output">{{ output }}</textarea>
+    <div class="col-md-6">
+        <label for="output-copy">Copy</label>
+        <div class="form-group">
+            <textarea class="form-control" rows="6" readonly id="output-copy">{{ copy }}</textarea>
+        </div>
+        <button id="btn-clipboard-copy" class="btn btn-default" data-clipboard-target="#output-copy"
+                data-placement="auto top" data-trigger="manual" data-title="Copied!">
+            Copy to clipboard
+        </button>
     </div>
-    <button id="btn-clipboard" class="btn btn-default" data-clipboard-target="#output"
-            data-placement="auto top" data-trigger="manual" data-title="Copied!">
-        Copy to clipboard
-    </button>
+    <div class="col-md-6">
+        <label for="output-profileset">Profileset</label>
+        <div class="form-group">
+            <textarea class="form-control" rows="6" readonly id="output-profileset">{{ profileset }}</textarea>
+        </div>
+        <button id="btn-clipboard-profileset" class="btn btn-default" data-clipboard-target="#output-profileset"
+                data-placement="auto top" data-trigger="manual" data-title="Copied!">
+            Copy to clipboard
+        </button>
+    </div>
 </div>
 {% endif %}
 {% endblock %}

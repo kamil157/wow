@@ -40,8 +40,9 @@ def get_talents(request, class_slug, spec_slug):
             logger.info("{} {} {}".format(class_name, spec_name, sorted_choices_str))
 
             # Get talent configurations
-            output, num_configs = get_configurations(sorted_choices, wow_class['talents'], spec_name)
-            view_data['output'] = output
+            copy, profileset, num_configs = get_configurations(sorted_choices, wow_class['talents'], spec_name)
+            view_data['copy'] = copy
+            view_data['profileset'] = profileset
             view_data['num_configs'] = num_configs
 
     else:

@@ -9,7 +9,7 @@ class TalentsForm(forms.Form):
         super().__init__(*args)
 
         for row_id, row in enumerate(talent_info):
-            # Talents in simcraft are numbered from 1
+            # Talents in SimulationCraft are numbered from 1
             choices = [(col_id + 1, get_talent_for_spec(spec_name, row[col_id])['name'])
                        for col_id in range(3)]
             talents = [get_talent_for_spec(spec_name, row[col_id]) for col_id in range(3)]

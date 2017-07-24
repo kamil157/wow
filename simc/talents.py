@@ -4,7 +4,7 @@ from itertools import product
 
 from wow import settings
 
-# In simcraft, 0 means no talent selected
+# In SimulationCraft, 0 means no talent selected
 NO_TALENT = '0'
 
 
@@ -55,12 +55,23 @@ def get_configurations(choice, talent_info, spec_name):
     talents = product(*values)
     talent_str = [''.join(talent_choice) for talent_choice in talents]
 
-    output = ('copy="{name}"\n'
-              'talents={configuration}\n')
+    # E.g.:
+    # copy=PM Shi MI AF FS LB Kin
+    # talents=1111111
+    copy = ('copy="{name}"\n'
+            'talents={configuration}\n')
 
+    # E.g.: profileset."PM Shi MI AF FS LB Kin"=talents=1111111
+    profileset = 'profileset."{name}"=talents={configuration}'
+
+    return make_output(spec_name, talent_info, talent_str, copy), \
+           make_output(spec_name, talent_info, talent_str, profileset) + '\n', \
+           len(talent_str)
+
+
+def make_output(spec_name, talent_info, talent_str, output):
     output_str_list = []
     for configuration in talent_str:
         name = get_configuration_name(configuration, spec_name, talent_info)
         output_str_list.append(output.format(name=name, configuration=configuration))
-
-    return '\n'.join(output_str_list), len(talent_str)
+    return '\n'.join(output_str_list)
