@@ -10,7 +10,10 @@ Choose specialization
 </h4>
 
 {% for class in classes %}
-    <div class="col-md-4">
+{% if forloop.counter0|divisibleby:3 %}
+<div class="row">
+{% endif %}
+    <div class="col-xs-4">
         <h4>
             <img src="//wow.zamimg.com/images/wow/icons/medium/{{ class.icon }}.jpg">
             {{ class.class_info.name }}
@@ -22,6 +25,9 @@ Choose specialization
         {% endfor %}
         <br>
     </div>
+{% if forloop.counter|divisibleby:3 %}
+</div>
+{% endif %}
 {% endfor %}
 
 {% endblock %}

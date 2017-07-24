@@ -3,7 +3,7 @@
 <tr>
     {% for group, options, index, talent in widget.optgroups %}
         {% for option in options %}
-            <td class="col-md-4">
+            <td class="col-xs-4">
                 <label for="{{ option.attrs.id }}"
                        class="btn-talent{% if 'checked' in option.attrs %} checked{% endif %}"
                        data-tooltip-href="//www.wowdb.com/spells/{{ talent.id }}">
