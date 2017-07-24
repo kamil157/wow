@@ -26,30 +26,17 @@
 </form>
 
 {% if copy %}
-<div>
-    <hr>
-    <h4>
-        SimulationCraft input ({{ num_configs }} configuration{{ num_configs|pluralize }})
-    </h4>
+<hr>
+<h4>
+    SimulationCraft input ({{ num_configs }} configuration{{ num_configs|pluralize }})
+</h4>
+
+<div class="row">
     <div class="col-md-6">
-        <label for="output-copy">Copy</label>
-        <div class="form-group">
-            <textarea class="form-control" rows="6" readonly id="output-copy">{{ copy }}</textarea>
-        </div>
-        <button id="btn-clipboard-copy" class="btn btn-default" data-clipboard-target="#output-copy"
-                data-placement="auto top" data-trigger="manual" data-title="Copied!">
-            Copy to clipboard
-        </button>
+        {% include "simc/output.html" with label="Copy" name="copy" data=copy %}
     </div>
     <div class="col-md-6">
-        <label for="output-profileset">Profileset</label>
-        <div class="form-group">
-            <textarea class="form-control" rows="6" readonly id="output-profileset">{{ profileset }}</textarea>
-        </div>
-        <button id="btn-clipboard-profileset" class="btn btn-default" data-clipboard-target="#output-profileset"
-                data-placement="auto top" data-trigger="manual" data-title="Copied!">
-            Copy to clipboard
-        </button>
+        {% include "simc/output.html" with label="Profileset" name="profileset" data=profileset %}
     </div>
 </div>
 {% endif %}

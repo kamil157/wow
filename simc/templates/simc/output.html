@@ -1,0 +1,8 @@
+<label for="output-copy">{{ label }}</label>
+<div class="form-group">
+    <textarea class="form-control" rows="6" readonly id="output-{{ name }}">{{ data }}</textarea>
+</div>
+<button id="btn-clipboard-{{ name }}" class="btn btn-default" data-clipboard-target="#output-{{ name }}"
+        data-placement="auto top" data-trigger="manual" data-title="Copied!">
+    Copy to clipboard
+</button>
