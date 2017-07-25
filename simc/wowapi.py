@@ -43,7 +43,7 @@ def get_talents():
                             dict(
                                 'spell': dict(
                                     'description': str,
-                                    'name': str,
+                                    'name': str
                                     'icon': str,
                                     'id': int,
                                     'castTime': str
