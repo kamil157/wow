@@ -1,12 +1,11 @@
 import logging
 from collections import OrderedDict
 
-from django.core.mail import mail_admins
 from django.http import Http404
 from django.shortcuts import render
 from django.utils.text import slugify
 
-from simc import wowapi
+from simc.wowapi import Wowapi
 from simc.forms import TalentsForm
 from simc.talents import get_configurations
 
@@ -14,6 +13,8 @@ logger = logging.getLogger('simc')
 
 
 def get_talents(request, class_slug, spec_slug):
+    wowapi = Wowapi()
+
     # Get class name from slug
     class_info = wowapi.get_classes()['classes']
     try:
@@ -54,6 +55,7 @@ def get_talents(request, class_slug, spec_slug):
 
 
 def get_select_spec(request):
+    wowapi = Wowapi()
     all_class_info = wowapi.get_classes()
     spec_json = wowapi.get_talents()
 

@@ -2,13 +2,14 @@ import os
 
 import requests
 
-from simc import wowapi
+from simc.wowapi import Wowapi
 
 # This script is used to generate words used for the talent abbreviations
 from wow import settings
 
 
 def get_talent_names():
+    wowapi = Wowapi()
     return [talent['spell']['name']
             for wow_class in wowapi.get_talents().values()
             for row in wow_class['talents']
