@@ -135,11 +135,6 @@ class Base(Configuration):
             },
         },
         'loggers': {
-            'django': {
-                'handlers': ['console', 'file'],
-                'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
-                'propagate': True,
-            },
             'simc': {
                 'handlers': ['console', 'file'],
                 'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
@@ -153,8 +148,8 @@ class Prod(Base):
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = False
 
+    # Security settings
     ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.21', 'wow-simc.herokuapp.com']
-
     X_FRAME_OPTIONS = 'DENY'
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
@@ -162,6 +157,14 @@ class Prod(Base):
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_HSTS_SECONDS = 3600
+
+    # Email settings
+    SERVER_EMAIL = 'errors@wow-simc.herokuapp.com'
+    EMAIL_USE_TLS = True
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = os.environ.get('EMAIL_ADDRESS')
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 
 
 class Dev(Base):

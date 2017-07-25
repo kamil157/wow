@@ -1,6 +1,7 @@
 import logging
 from collections import OrderedDict
 
+from django.core.mail import mail_admins
 from django.http import Http404
 from django.shortcuts import render
 from django.utils.text import slugify
