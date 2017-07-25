@@ -1,6 +1,7 @@
 import os
 from functools import lru_cache
 from itertools import product
+from textwrap import dedent
 
 from wow import settings
 
@@ -55,18 +56,41 @@ def get_configurations(choice, talent_info, spec_name):
     talents = product(*values)
     talent_str = [''.join(talent_choice) for talent_choice in talents]
 
+    copy_output = format_copy_output(spec_name, talent_info, talent_str)
+    profileset_output = format_profileset_output(spec_name, talent_info, talent_str)
+
+    return copy_output, profileset_output, len(talent_str)
+
+
+def format_profileset_output(spec_name, talent_info, talent_str):
+    # E.g.: profileset."PM Shi MI AF FS LB Kin"=talents=1111111
+    output_format = 'profileset."{name}"=talents={configuration}'
+    output = make_output(spec_name, talent_info, talent_str, output_format)
+    comment = '''
+        # Paste this after your simc profile.
+        # Profilesets greatly reduce memory usage, 
+        # but they might not be fully operational yet.
+        
+        {output}
+        '''
+    return dedent(comment).format(output=output)
+
+
+def format_copy_output(spec_name, talent_info, talent_str):
     # E.g.:
     # copy=PM Shi MI AF FS LB Kin
     # talents=1111111
-    copy = ('copy="{name}"\n'
-            'talents={configuration}\n')
-
-    # E.g.: profileset."PM Shi MI AF FS LB Kin"=talents=1111111
-    profileset = 'profileset."{name}"=talents={configuration}'
-
-    return make_output(spec_name, talent_info, talent_str, copy), \
-           make_output(spec_name, talent_info, talent_str, profileset) + '\n', \
-           len(talent_str)
+    output_format = ('copy="{name}"\n'
+                     'talents={configuration}\n')
+    output = make_output(spec_name, talent_info, talent_str, output_format).rstrip()
+    comment = '''
+        # Paste this after your simc profile.
+        # Copy requires memory for each configuration, which might result 
+        # in crashing your computer with many configurations.
+        
+        {output}
+        '''
+    return dedent(comment).format(output=output)
 
 
 def make_output(spec_name, talent_info, talent_str, output):
@@ -74,4 +98,5 @@ def make_output(spec_name, talent_info, talent_str, output):
     for configuration in talent_str:
         name = get_configuration_name(configuration, spec_name, talent_info)
         output_str_list.append(output.format(name=name, configuration=configuration))
-    return '\n'.join(output_str_list)
+    output = '\n'.join(output_str_list)
+    return output
