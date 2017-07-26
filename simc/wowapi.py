@@ -9,9 +9,11 @@ class Wowapi:
     def __init__(self, apikey=WOW_API_SECRET_KEY):
         self.apikey = apikey
 
-    def get(self, resource):
-        root = 'https://eu.api.battle.net/wow/data/'
-        params = {'apikey': self.apikey, 'locale': 'en_US'}
+    def get(self, resource, params=None):
+        if params is None:
+            params = {}
+        root = 'https://eu.api.battle.net/wow/'
+        params.update({'apikey': self.apikey, 'locale': 'en_US'})
 
         s = CachedSession(expire_after=timedelta(hours=1))
         return s.get(root + resource, params=params).json()
@@ -30,7 +32,7 @@ class Wowapi:
                 )
             )
         """
-        return self.get('character/classes')
+        return self.get('data/character/classes')
 
     def get_talents(self):
         """
@@ -77,4 +79,4 @@ class Wowapi:
                 '2': ...,
         """
         # TODO would be nice if this structure was defined in code and easier to navigate
-        return self.get('talents')
+        return self.get('data/talents')
