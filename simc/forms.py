@@ -5,7 +5,7 @@ from simc.widgets import TalentSelectMultiple
 
 
 class TalentsForm(forms.Form):
-    def __init__(self, talent_info, spec_name, *args):
+    def __init__(self, talent_info, spec_name: str, *args) -> None:
         super().__init__(*args)
 
         for row_id, row in enumerate(talent_info):

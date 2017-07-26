@@ -1,4 +1,5 @@
 from datetime import timedelta
+from typing import Dict, List, Union
 
 from requests_cache import CachedSession
 
@@ -6,10 +7,10 @@ from wow.settings import WOW_API_SECRET_KEY
 
 
 class Wowapi:
-    def __init__(self, apikey=WOW_API_SECRET_KEY):
-        self.apikey = apikey
+    def __init__(self, apikey=WOW_API_SECRET_KEY) -> None:
+        self.apikey = apikey  # type: str
 
-    def get(self, resource, params=None):
+    def get(self, resource: str, params=None):
         if params is None:
             params = {}
         root = 'https://eu.api.battle.net/wow/'
@@ -18,7 +19,7 @@ class Wowapi:
         s = CachedSession(expire_after=timedelta(hours=1))
         return s.get(root + resource, params=params).json()
 
-    def get_classes(self):
+    def get_classes(self) -> Dict[str, List[Dict[str, Union[str, int]]]]:
         """
         Returns:
             dict(
@@ -34,7 +35,11 @@ class Wowapi:
         """
         return self.get('data/character/classes')
 
-    def get_talents(self):
+    Spell = Dict[str, Union[int, str]]
+    Spec = Dict[str, Union[int, str]]
+    Talents = List[List[List[Dict[str, Union[Spell, Spec, int]]]]]
+
+    def get_talents(self) -> Dict[str, Dict[str, Union[Talents, str, List[Spec]]]]:
         """
         Returns:
             dict(

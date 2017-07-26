@@ -1,7 +1,8 @@
 import logging
 from collections import OrderedDict
+from typing import Dict, Any, List, Union
 
-from django.http import Http404
+from django.http import Http404, HttpResponse, HttpRequest
 from django.shortcuts import render
 from django.utils.text import slugify
 
@@ -12,7 +13,7 @@ from simc.talents import get_configurations
 logger = logging.getLogger('simc')
 
 
-def get_talents(request, class_slug, spec_slug):
+def get_talents(request: HttpRequest, class_slug: str, spec_slug: str) -> HttpResponse:
     wowapi = Wowapi()
 
     # Get class name from slug
@@ -26,8 +27,8 @@ def get_talents(request, class_slug, spec_slug):
     talents_info = wowapi.get_talents()
     wow_class = next(c for c in talents_info.values() if c['class'] == class_slug)
     try:
-        spec = next(s for s in wow_class['specs'] if slugify(s['name']) == spec_slug)
-        spec_name = spec['name']
+        spec = next(s for s in wow_class['specs'] if slugify(s['name']) == spec_slug)  # type: Wowapi.Spec
+        spec_name = spec['name']  # type: str
     except StopIteration:
         raise Http404('Invalid spec slug.')
 
@@ -54,7 +55,7 @@ def get_talents(request, class_slug, spec_slug):
     return render(request, 'simc/talents.html', view_data)
 
 
-def get_select_spec(request):
+def get_select_spec(request: HttpRequest) -> HttpResponse:
     wowapi = Wowapi()
     all_class_info = wowapi.get_classes()
     spec_json = wowapi.get_talents()

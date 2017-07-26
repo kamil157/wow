@@ -2,7 +2,7 @@ from django.forms import CheckboxSelectMultiple
 
 
 class TalentSelectMultiple(CheckboxSelectMultiple):
-    def __init__(self, talents, *args, **kwargs):
+    def __init__(self, talents, *args, **kwargs) -> None:
         self.talents = talents
         super().__init__(*args, **kwargs)
 
