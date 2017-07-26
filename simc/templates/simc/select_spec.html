@@ -15,7 +15,7 @@ Choose specialization
 {% endif %}
     <div class="col-xs-4">
         <h4>
-            <img src="//wow.zamimg.com/images/wow/icons/medium/{{ class.icon }}.jpg">
+            <img src="//wow.zamimg.com/images/wow/icons/medium/{{ class.icon }}.jpg" alt="">
             {{ class.class_info.name }}
         </h4>
         {% for spec in class.specs %}
@@ -29,5 +29,9 @@ Choose specialization
 </div>
 {% endif %}
 {% endfor %}
+
+{% if not classes|length|divisibleby:3 %}
+</div>
+{% endif %}
 
 {% endblock %}

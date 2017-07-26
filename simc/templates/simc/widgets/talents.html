@@ -8,7 +8,7 @@
                        class="btn-talent{% if 'checked' in option.attrs %} checked{% endif %}"
                        data-tooltip-href="//www.wowdb.com/spells/{{ talent.id }}">
                     {% include "django/forms/widgets/checkbox.html" with widget=option %}
-                    <img src="//wow.zamimg.com/images/wow/icons/large/{{ talent.icon|icon }}.jpg">
+                    <img src="//wow.zamimg.com/images/wow/icons/large/{{ talent.icon|icon }}.jpg" alt="">
                     <span>{{ talent.name }}</span>
                 </label>
             </td>
