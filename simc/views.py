@@ -17,9 +17,9 @@ def get_talents(request: HttpRequest, class_slug: str, spec_slug: str) -> HttpRe
     wowapi = Wowapi()
 
     # Get class name from slug
-    class_info = wowapi.get_classes()['classes']
+    class_info = wowapi.get_classes().classes
     try:
-        class_name = next(c['name'] for c in class_info if slugify(c['name']) == class_slug)
+        class_name = next(c.name for c in class_info if slugify(c.name) == class_slug)
     except StopIteration:
         raise Http404('Invalid class slug.')
 
@@ -61,8 +61,8 @@ def get_select_spec(request: HttpRequest) -> HttpResponse:
     spec_json = wowapi.get_talents()
 
     classes = []
-    for class_info in all_class_info['classes']:
-        wow_class = spec_json[str(class_info['id'])]
+    for class_info in all_class_info.classes:
+        wow_class = spec_json[str(class_info.id)]
         icon = 'classicon_{}'.format(wow_class['class'].replace('-', ''))
         classes.append(
             {'class_info': class_info, 'specs': wow_class['specs'], 'slug': wow_class['class'], 'icon': icon})

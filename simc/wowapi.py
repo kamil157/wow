@@ -6,6 +6,19 @@ from requests_cache import CachedSession
 from wow.settings import WOW_API_SECRET_KEY
 
 
+class WowClass:
+    def __init__(self, data) -> None:
+        self.id = data['id']  # type: int
+        self.name = data['name']  # type: str
+        self.mask = data['mask']  # type: str
+        self.powerType = data['powerType']  # type: str
+
+
+class Classes:
+    def __init__(self, data) -> None:
+        self.classes = [WowClass(classData) for classData in data['classes']]
+
+
 class Wowapi:
     def __init__(self, apikey=WOW_API_SECRET_KEY) -> None:
         self.apikey = apikey  # type: str
@@ -16,24 +29,12 @@ class Wowapi:
         root = 'https://eu.api.battle.net/wow/'
         params.update({'apikey': self.apikey, 'locale': 'en_US'})
 
-        s = CachedSession(expire_after=timedelta(hours=1))
-        return s.get(root + resource, params=params).json()
+        session = CachedSession(expire_after=timedelta(hours=1))
+        return session.get(root + resource, params=params).json()
 
-    def get_classes(self) -> Dict[str, List[Dict[str, Union[str, int]]]]:
-        """
-        Returns:
-            dict(
-                'classes': list(
-                    dict(
-                        'id': int,
-                        'mask': int,
-                        'name': str,
-                        'powerType': str
-                    )
-                )
-            )
-        """
-        return self.get('data/character/classes')
+    def get_classes(self) -> Classes:
+        return Classes(self.get('data/character/classes'))
+
 
     Spell = Dict[str, Union[int, str]]
     Spec = Dict[str, Union[int, str]]
