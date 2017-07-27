@@ -51,7 +51,7 @@ def get_configuration_name(configuration, spec_name: str, talent_info) -> str:
     return ' '.join(talent_names)
 
 
-def get_configurations(choice, talent_info, spec_name: str) -> Tuple[str, str, int]:
+def get_configurations(choice, talent_info, spec_name: str) -> Tuple[str, str, int]:  # TODO class/dict for this
     values = [c if c else [NO_TALENT] for c in choice.values()]
     talents = product(*values)
     talent_str = [''.join(talent_choice) for talent_choice in talents]

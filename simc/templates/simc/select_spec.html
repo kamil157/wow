@@ -16,11 +16,11 @@ Choose specialization
     <div class="col-xs-4">
         <h4>
             <img src="//wow.zamimg.com/images/wow/icons/medium/{{ class.icon }}.jpg" alt="">
-            {{ class.class_info.name }}
+            {{ class.name }}
         </h4>
         {% for spec in class.specs %}
             <div class="mb-5">
-                <a href="{% url 'simc:talents' class.slug spec.name|slugify %}">{{ spec.name }}</a>
+                <a href="{% url 'simc:talents' class.slug spec.slug %}">{{ spec.name }}</a>
             </div>
         {% endfor %}
         <br>
