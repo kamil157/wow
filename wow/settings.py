@@ -24,7 +24,8 @@ class Base(Configuration):
 
     # SECURITY WARNING: keep the secret key used in production secret!
     SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '71$gnb8&048&6)g8c!s=l9^!mijad8&kjcb&b2rurz@=fuyn5(')
-    WOW_API_SECRET_KEY = os.environ.get('WOW_API_SECRET_KEY', '4uhe36pa65u5nvacajwpkz4s9jzjzd8q')
+    WOW_API_CLIENT_ID = os.environ.get('WOW_API_CLIENT_ID', 'f4061f9fb6464c0aa7e335e3022302fd')
+    WOW_API_CLIENT_SECRET =  os.environ.get('WOW_API_CLIENT_SECRET', '3MkPK0dhHOFKUAMppq6P7OrNfaTt2lzg')
 
     ADMINS = [('Kamil', 'kamilchlodnicki@gmail.com')]
 
