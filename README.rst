@@ -4,6 +4,8 @@ This project is a Django website which generates input for SimulationCraft based
 selected talents.
 It generates both copy=... and profileset... settings.
 
+![Example](example.gif)
+
 Installation notes:
 
 - Install `Python <https://www.python.org/>`_
@@ -25,6 +27,7 @@ Environment variables:
 | DJANGO_SECRET_KEY    | `Django doc <https://docs.djangoproject.com/en/1.11/ref/settings/#std:setting-SECRET_KEY>`_ |
 +----------------------+---------------------------------------------------------------------------------------------+
 | WOW_API_CLIENT_ID    | Client id for battle.net API                                                                |
++----------------------+---------------------------------------------------------------------------------------------+
 | WOW_API_CLIENT_SECRET| Secret key used for battle.net API                                                          |
 +----------------------+---------------------------------------------------------------------------------------------+
 | EMAIL_ADDRESS        | Email address from which email messages are sent                                            |
