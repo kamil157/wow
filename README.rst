@@ -4,7 +4,7 @@ This project is a Django website which generates input for SimulationCraft based
 selected talents.
 It generates both copy=... and profileset... settings.
 
-.. image::example.png
+.. image:: example.png
 
 Installation notes:
 
