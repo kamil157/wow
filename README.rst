@@ -6,8 +6,8 @@ It generates both copy=... and profileset... settings.
 
 .. image:: example.png
 
-Installation notes:
-
+Installation notes
+------------------
 - Install `Python <https://www.python.org/>`_
 - Install and activate `virtualenv <https://virtualenv.pypa.io/en/stable/>`_
 - Install `requirements.txt <https://pip.pypa.io/en/stable/user_guide/#requirements-files>`_
@@ -17,8 +17,8 @@ Installation notes:
 
 .. _environment:
 
-Environment variables:
-
+Environment variables
+---------------------
 +----------------------+---------------------------------------------------------------------------------------------+
 | Name                 | Description                                                                                 |
 +======================+=============================================================================================+
