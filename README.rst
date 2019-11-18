@@ -5,6 +5,7 @@ selected talents.
 It generates both copy=... and profileset... settings.
 
 .. image:: example.png
+   :width: 40pt
 
 Installation notes:
 
